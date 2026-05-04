@@ -1,3 +1,7 @@
+import sys
+import os as _path_os
+sys.path.insert(0, _path_os.path.dirname(_path_os.path.abspath(__file__)))
+
 from fastapi import FastAPI, Request, Form, HTTPException, UploadFile, File, Depends, Header, Cookie, Body, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -274,15 +278,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="../frontend/src/components"), name="static")
+import os as _os
+_static_dir = _os.path.join(_os.path.dirname(__file__), "..", "frontend", "src", "components")
+try:
+    app.mount("/static", StaticFiles(directory=_static_dir), name="static")
+except Exception:
+    pass
 
 # Serve uploaded files (chat images, etc.)
-import os as _os
 _uploads_dir = _os.path.join(_os.path.dirname(__file__), "..", "frontend", "src", "uploads")
-_os.makedirs(_uploads_dir, exist_ok=True)
-app.mount("/uploads", StaticFiles(directory=_uploads_dir), name="uploads")
+try:
+    _os.makedirs(_uploads_dir, exist_ok=True)
+    app.mount("/uploads", StaticFiles(directory=_uploads_dir), name="uploads")
+except Exception:
+    pass
 
-templates = Jinja2Templates(directory="../frontend/src/pages")
+_templates_dir = _os.path.join(_os.path.dirname(__file__), "..", "frontend", "src", "pages")
+try:
+    templates = Jinja2Templates(directory=_templates_dir)
+except Exception:
+    templates = None
 
 # ----------------------------------------
 # AUTHENTICATION HELPERS
