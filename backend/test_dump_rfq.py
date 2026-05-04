@@ -1,8 +1,10 @@
+import os
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 
 async def main():
-    client = AsyncIOMotorClient("mongodb://localhost:27017")
+    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+    client = AsyncIOMotorClient(mongo_uri)
     db = client["texbid_db"]
     
     rfq = await db["rfqs"].find_one({"id": "7985b314-a785-4aa6-a991-5102d561561f"})

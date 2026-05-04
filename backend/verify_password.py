@@ -1,3 +1,4 @@
+import os
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 from passlib.context import CryptContext
@@ -6,7 +7,8 @@ from passlib.context import CryptContext
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 async def main():
-    client = AsyncIOMotorClient('mongodb://localhost:27017')
+    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+    client = AsyncIOMotorClient(mongo_uri)
     db = client.texbid_db
     
     print("=" * 60)
