@@ -66,6 +66,81 @@ body {
     }
 }
 
+/* ===== MOBILE MENU ===== */
+#mobile-menu-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background-color: #0f172a; /* brand-dark solid — no transparency */
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: max-height;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Inner container padding */
+#mobile-menu-panel > div {
+    padding: 0.5rem 1rem 1rem;
+    background-color: #0f172a;
+}
+
+/* Staggered fade-in for mobile nav links */
+#mobile-menu-panel:not(.hidden) .mobile-nav-link {
+    animation: mobileNavFadeIn 0.3s ease forwards;
+    opacity: 0;
+    transform: translateX(-12px);
+}
+
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(1)  { animation-delay: 0.04s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(2)  { animation-delay: 0.08s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(3)  { animation-delay: 0.12s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(4)  { animation-delay: 0.16s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(5)  { animation-delay: 0.20s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(6)  { animation-delay: 0.24s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(7)  { animation-delay: 0.28s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(8)  { animation-delay: 0.32s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(9)  { animation-delay: 0.36s; }
+#mobile-menu-panel:not(.hidden) .mobile-nav-link:nth-child(10) { animation-delay: 0.40s; }
+
+@keyframes mobileNavFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mobile section headers */
+.mobile-nav-section > p {
+    letter-spacing: 0.08em;
+}
+
+/* Hamburger / Close icon transition */
+#hamburger-icon,
+#close-icon {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active link highlight on mobile */
+@media (max-width: 1023px) {
+    .mobile-nav-link:active {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        transform: scale(0.98);
+    }
+    
+    /* Limit mobile menu panel height so it scrolls if there are many links */
+    #mobile-menu-panel > div {
+        max-height: calc(100vh - 5rem);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
 /* ===== ANIMATIONS ===== */
 
 @keyframes fadeInUp {
